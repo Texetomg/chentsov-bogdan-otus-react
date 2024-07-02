@@ -30,26 +30,12 @@ const MainContainer: React.FC<{ children: React.ReactNode, title: string }> = ({
           </Button>
         </Toolbar>
       </AppBar>
-      <main style={{ height: "calc(100% - 168px)" }}>
+      <main style={{ height: "calc(100% - 108px)" }}>
         <Card style={{ margin: "20px", padding: "20px", height: "100%" }}>
           <CardHeader title={title} style={{ textAlign: "center" }} />
           {children}
         </Card>
       </main>
-      <footer>
-        <div
-          style={{
-            textAlign: "center",
-            margin: "20px",
-            height: "64px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          Footer
-        </div>
-      </footer>
     </div>
   );
 };

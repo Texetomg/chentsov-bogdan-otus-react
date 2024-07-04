@@ -15,7 +15,7 @@ const MainContainer: React.FC<{ children: React.ReactNode; title: string }> = ({
   const pathname = usePathname();
 
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%"}}>
       <CssBaseline />
       <AppBar position="static" color="default">
         <Toolbar
@@ -47,7 +47,7 @@ const MainContainer: React.FC<{ children: React.ReactNode; title: string }> = ({
         </Toolbar>
       </AppBar>
       <main style={{ height: "calc(100% - 108px)" }}>
-        <Card style={{ margin: "20px", padding: "20px", height: "100%" }}>
+        <Card style={{ margin: "20px", padding: "20px", height: "100%", overflowY: "scroll"  }}>
           <CardHeader title={title} style={{ textAlign: "center" }} />
           {children}
         </Card>

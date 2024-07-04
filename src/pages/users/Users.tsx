@@ -15,6 +15,10 @@ const rows = [
     target: "email",
   },
   {
+    title: "Rank",
+    target: "rank",
+  },
+  {
     title: "Role",
     target: "role",
   },

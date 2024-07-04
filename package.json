@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.2",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.5",
     "@mui/material-nextjs": "^5.15.11",
+    "@uiw/react-codemirror": "^4.23.0",
     "axios": "^1.7.2",
     "lodash": "^4.17.21",
     "next": "14.2.4",

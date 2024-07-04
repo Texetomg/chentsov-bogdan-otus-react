@@ -2,22 +2,10 @@ import { api } from "@/axios";
 import MainContainer from "@/components/MainContainer";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import { styled } from "@mui/material/styles";
+import TaskBody from "./components/TaskBody";
+import TaskCode from "./components/TaskCode";
 
-const Item = styled(Paper)(() => ({
-  textAlign: "left",
-  lineHeight: "30px",
-  padding: "10px",
-  width: "100%",
-  maxWidth: "700px",
-  "&:not(:last-child)": {
-    marginBottom: "10px",
-  },
-}));
-
-interface IData {
+export interface IData {
   id: number;
   name: string;
   description: string;
@@ -30,55 +18,43 @@ interface IData {
 const Task = () => {
   const { query } = useRouter();
   const [data, setData] = useState<IData | null>(null);
+  const [code, setCode] = useState("");
+  const [solution, setSolution] = useState("");
 
   useEffect(() => {
     if (query.id) {
       api.get(`tasks/${query.id}`).then(({ data }) => setData(data));
+      api.get(`solutions/${query.id}`).then(({ data }) => {
+        setSolution(data?.solution?.value || "");
+        setCode(data?.solution?.value || "");
+      });
     }
   }, [query.id]);
 
+  const saveSolution = (value: string) => {
+    if (!solution) {
+      api.post(`solutions/${query.id}`, { value: code });
+    } else {
+      api.patch(`solutions/${query.id}`, { value: code });
+    }
+  };
+
   return (
     <MainContainer title={`Task ${query.id}`}>
-      <Box
-        sx={{
+      <div
+        style={{
           display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
+          gap: "20px",
+          justifyContent: "center",
         }}
       >
-        <Item>
-          Name: <div>{data?.name}</div>
-        </Item>
-        <Item>
-          Description: <div>{data?.description}</div>
-        </Item>
-        <Item>
-          Rating: <div>{data?.rating}</div>
-        </Item>
-        <Item>
-          <>
-            <div>Constraints:</div>
-            {data?.constraints?.map((constraint, idx) => (
-              <Item key={idx}>{constraint}</Item>
-            ))}
-          </>
-        </Item>
-        <Item>
-          <>
-            <div>Examples:</div>
-            {data?.examples?.map((example, idx) => (
-              <Item key={idx}>
-                <div>Input: {example.input}</div>
-                <div>Output: {example.output}</div>
-              </Item>
-            ))}
-          </>
-        </Item>
-        <Item>
-          Difficulty:
-          <div>{data?.difficulty}</div>
-        </Item>
-      </Box>
+        <TaskBody data={data} />
+        <TaskCode
+          value={solution || code}
+          setValue={setCode}
+          saveSolution={saveSolution}
+        />
+      </div>
     </MainContainer>
   );
 };

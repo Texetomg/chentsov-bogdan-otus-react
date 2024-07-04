@@ -7,9 +7,13 @@ import Card from "@mui/material/Card";
 import { usePathname } from "next/navigation";
 
 import "../../app/globals.css";
-const MainContainer: React.FC<{ children: React.ReactNode, title: string }> = ({
-  children, title
+import Link from "next/link";
+const MainContainer: React.FC<{ children: React.ReactNode; title: string }> = ({
+  children,
+  title,
 }) => {
+  const pathname = usePathname();
+
   return (
     <div style={{ height: "100%" }}>
       <CssBaseline />
@@ -22,8 +26,20 @@ const MainContainer: React.FC<{ children: React.ReactNode, title: string }> = ({
           }}
         >
           <div>
-            <Button>Users</Button>
-            <Button>Tasks</Button>
+            <Link href="/users">
+              <Button
+                variant={pathname?.includes("/users") ? "outlined" : "text"}
+              >
+                Users
+              </Button>
+            </Link>
+            <Link href="/tasks">
+              <Button
+                variant={pathname?.includes("/tasks") ? "outlined" : "text"}
+              >
+                Tasks
+              </Button>
+            </Link>
           </div>
           <Button color="primary" variant="outlined">
             Login

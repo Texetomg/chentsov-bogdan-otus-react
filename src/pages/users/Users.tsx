@@ -8,6 +8,7 @@ const rows = [
   {
     title: "Login",
     target: "login",
+    url: "users",
   },
   {
     title: "Email",

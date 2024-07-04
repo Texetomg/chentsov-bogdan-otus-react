@@ -15,6 +15,7 @@ export type TData = {
 export type TRow = {
   title: string;
   target: string;
+  url?: string;
 };
 
 interface IProps {
@@ -28,8 +29,8 @@ const BaseTable: React.FC<IProps> = ({ data, rows }) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            {rows.map((row) => (
-              <TableCell key={row.title} align="center">
+            {rows.map((row, idx) => (
+              <TableCell key={row.title} align={idx === 0 ? "left" : "center"}>
                 {row.title}
               </TableCell>
             ))}
@@ -37,13 +38,19 @@ const BaseTable: React.FC<IProps> = ({ data, rows }) => {
         </TableHead>
         <TableBody>
           {data.map((dataEl, idx) => (
-            <TableRow
-              key={idx}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              {rows.map((row) => (
-                <TableCell key={row.title} align="left">
-                  {_.get(dataEl, row.target)}
+            <TableRow key={idx}>
+              {rows.map((row, idx) => (
+                <TableCell
+                  key={row.title}
+                  align={idx === 0 ? "left" : "center"}
+                >
+                  {row?.url ? (
+                    <a href={`${row.url}/${dataEl.id}`}>
+                      {_.get(dataEl, row.target)}
+                    </a>
+                  ) : (
+                    _.get(dataEl, row.target)
+                  )}
                 </TableCell>
               ))}
             </TableRow>

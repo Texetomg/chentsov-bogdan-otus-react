@@ -8,6 +8,7 @@ const rows = [
   {
     title: "Name",
     target: "name",
+    url: "tasks",
   },
   {
     title: "Description",

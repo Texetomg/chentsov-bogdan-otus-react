@@ -14,8 +14,9 @@ export type TData = {
 
 export type TRow = {
   title: string;
-  target: string;
+  target?: string;
   url?: string;
+  custom?: (data: TData) => JSX.Element;
 };
 
 interface IProps {
@@ -25,8 +26,11 @@ interface IProps {
 
 const BaseTable: React.FC<IProps> = ({ data, rows }) => {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer
+      component={Paper}
+      sx={{ minWidth: 650, maxWidth: 1400, margin: "auto" }}
+    >
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             {rows.map((row, idx) => (
@@ -48,6 +52,8 @@ const BaseTable: React.FC<IProps> = ({ data, rows }) => {
                     <a href={`${row.url}/${dataEl.id}`}>
                       {_.get(dataEl, row.target)}
                     </a>
+                  ) : row?.custom ? (
+                    row.custom(dataEl)
                   ) : (
                     _.get(dataEl, row.target)
                   )}

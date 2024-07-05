@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "./index.module.css";
 import { api } from "@/axios";
 import MainContainer from "@/components/MainContainer";
 import BaseTable from "@/components/BaseTable";
+import { TData } from "@/components/BaseTable/BaseTable";
 
 const rows = [
   {
@@ -21,7 +21,7 @@ const rows = [
 ];
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<TData[]>([]);
   useEffect(() => {
     api.get("tasks").then(({ data }) => setTasks(data));
   }, []);

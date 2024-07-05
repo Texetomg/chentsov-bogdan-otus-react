@@ -8,10 +8,12 @@ import { usePathname } from "next/navigation";
 
 import "../../app/globals.css";
 import Link from "next/link";
-const MainContainer: React.FC<{ children: React.ReactNode; title: string }> = ({
-  children,
-  title,
-}) => {
+interface IProps {
+  children: React.ReactNode;
+  title: string;
+  edit: JSX.Element;
+}
+const MainContainer: React.FC<IProps> = ({ children, title, edit }) => {
   const pathname = usePathname();
 
   return (
@@ -41,13 +43,11 @@ const MainContainer: React.FC<{ children: React.ReactNode; title: string }> = ({
               </Button>
             </Link>
           </div>
-          <Button color="primary" variant="outlined">
-            Login
-          </Button>
+          {edit && edit}
         </Toolbar>
       </AppBar>
       <main style={{ height: "calc(100% - 108px)" }}>
-        <Card style={{ margin: "20px", padding: "20px", height: "100%" }}>
+        <Card style={{ padding: "20px", height: "100%" }}>
           <CardHeader title={title} style={{ textAlign: "center" }} />
           {children}
         </Card>

@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import Custom404 from "../404";
 
 const Item = styled(Paper)(() => ({
   textAlign: "left",
@@ -28,11 +29,16 @@ interface IData {
 
 const User = () => {
   const { query } = useRouter();
-  const [data, setData] = useState<IData | null>(null);
+  const [data, setData] = useState<IData | null | undefined>(null);
 
   useEffect(() => {
     if (query.id) {
-      api.get(`users/${query.id}`).then(({ data }) => setData(data));
+      api.get(`users/${query.id}`).then(
+        ({ data }) => setData(data),
+        () => {
+          setData(undefined);
+        }
+      );
     }
   }, [query.id]);
 
@@ -40,6 +46,13 @@ const User = () => {
     api
       .patch(`users/${query.id}/rank`, { rank })
       .then(() => setData({ ...data, rank } as IData));
+
+  if (data === null) {
+    return "loading";
+  }
+  if (!data && data !== null) {
+    return <Custom404 />;
+  }
 
   return (
     <MainContainer title={`user ${query.id}`}>

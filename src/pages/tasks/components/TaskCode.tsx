@@ -8,7 +8,7 @@ interface IProps {
   saveSolution: (value: string) => void;
 }
 
-const TaskCode: React.FC<IProps> = ({ value = "", setValue, saveSolution }) => {
+const TaskCode: React.FC<IProps> = ({ value, setValue, saveSolution }) => {
   return (
     <div style={{ width: "50%", height: "100%" }}>
       <CodeMirror
